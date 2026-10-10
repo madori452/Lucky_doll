@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>今日幸運娃｜八字幸運色 × 飾品娃娃</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Huninn&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FFFCF6; --ink:#3E3A39; --coral:#F2A497; --yellow:#F6D27A; --water:#A8D3E6; --green:#B9DAA5;
+  --card:#FFFFFF; --soft:#F6EFE3; --coral-l:#FCE7E2; --yellow-l:#FDF3D8; --water-l:#E5F2F8; --green-l:#EAF4E3;
+  --nav-h:66px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{background:var(--paper);scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + env(safe-area-inset-top,0px) + 14px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Huninn","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;font-weight:400;line-height:1.65;font-size:16px;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4,b,strong{font-weight:400;margin:0}
+p{margin:0}
+img,svg{max-width:100%}
+a{color:var(--ink)}
+:focus-visible{outline:3px dashed var(--ink);outline-offset:3px}
+button{font-family:inherit;font-weight:400;color:var(--ink);cursor:pointer}
+
+/* ---------- 選單 ---------- */
+.topnav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--paper);border-bottom:3px solid var(--ink);padding-top:env(safe-area-inset-top,0px)}
+.topnav .in{max-width:760px;margin:0 auto;height:63px;display:flex;align-items:center;gap:8px;padding:0 10px}
+.brand{flex:0 0 auto;display:flex;align-items:center;gap:6px;text-decoration:none;font-size:17px}
+.brand svg{width:36px;height:36px}
+.links{position:relative;flex:1 1 auto;min-width:0;overflow-x:auto;display:flex;gap:6px;padding:4px 2px;scrollbar-width:none;-webkit-mask-image:linear-gradient(to right,#000 78%,transparent);mask-image:linear-gradient(to right,#000 78%,transparent)}
+.links::-webkit-scrollbar{display:none}
+.links.at-end{-webkit-mask-image:none;mask-image:none}
+.links a{flex:0 0 auto;text-decoration:none;white-space:nowrap;border:2px solid var(--ink);border-radius:999px;padding:4px 12px;background:var(--card);font-size:15px}
+.links a.active{background:var(--yellow)}
+.motion-btn{flex:0 0 auto;width:42px;height:42px;border-radius:999px;border:3px solid var(--ink);background:var(--card);display:grid;place-items:center;padding:0}
+.motion-btn svg{width:24px;height:24px}
+html.reduce .motion-btn{background:var(--green)}
+
+main{max-width:560px;margin:0 auto;padding:calc(var(--nav-h) + 18px) 16px 24px}
+section{margin-bottom:48px}
+.sec-title{display:flex;align-items:center;gap:10px;font-size:26px;margin-bottom:16px}
+.sec-title svg{width:44px;height:44px;flex:0 0 auto}
+.sec-sub{font-size:15px;margin:-8px 0 16px}
+
+.card{background:var(--card);border:3px solid var(--ink);border-radius:28px;padding:20px;box-shadow:0 5px 0 var(--ink)}
+.card.flat{box-shadow:none}
+.sub-card{border:3px solid var(--ink);border-radius:20px;padding:16px}
+.pill{display:inline-flex;align-items:center;gap:6px;border:2px solid var(--ink);border-radius:999px;padding:2px 12px;font-size:14px;background:var(--card);white-space:nowrap}
+.pill.coral{background:var(--coral)} .pill.yellow{background:var(--yellow)} .pill.water{background:var(--water)} .pill.green{background:var(--green)} .pill.soft{background:var(--soft)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:3px solid var(--ink);border-radius:999px;padding:10px 22px;font-size:18px;background:var(--yellow);box-shadow:0 5px 0 var(--ink);text-decoration:none;transition:transform .12s,box-shadow .12s}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
+.btn.small{font-size:15px;padding:6px 16px;box-shadow:none;border-width:2px;background:var(--card)}
+.btn.small:active{transform:translateY(2px)}
+.btn.block{width:100%}
+
+/* ---------- 首頁 ---------- */
+.hero-art{border:3px solid var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 5px 0 var(--ink);background:var(--water);line-height:0}
+.hero-art > svg{width:100%;height:auto;display:block}
+.hero-art svg svg{width:64px;height:64px;overflow:visible}
+.hero h1{font-size:40px;line-height:1.2;margin:22px 0 6px;letter-spacing:.02em}
+.hero .lead{font-size:17px;margin-bottom:14px}
+.today-box{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.gz{border:3px solid var(--ink);border-radius:20px;text-align:center;padding:8px 4px}
+.gz .big{font-size:28px;line-height:1.2;display:block}
+.gz .lab{font-size:13px}
+.gz:nth-child(1){background:var(--coral-l)} .gz:nth-child(2){background:var(--yellow-l)} .gz:nth-child(3){background:var(--water-l)}
+.hero-greet{margin-top:18px}
+.hero-greet .card{display:flex;gap:14px;align-items:center;padding:16px}
+.hero-greet .dot{width:58px;height:58px;border-radius:999px;border:3px solid var(--ink);flex:0 0 auto}
+
+/* ---------- 表單 ---------- */
+.field{margin-bottom:18px}
+.field > label,.field > .lab{display:block;font-size:16px;margin-bottom:6px}
+.field .hint{font-size:13px;margin-top:6px}
+.inp{width:100%;height:50px;border:3px solid var(--ink);border-radius:999px;background:var(--paper);padding:0 18px;font-family:inherit;font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none}
+select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='%233E3A39' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:42px}
+.inp:disabled{opacity:.45}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:flex;gap:10px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{flex:1;text-align:center;border:3px solid var(--ink);border-radius:999px;padding:10px 0;background:var(--card);font-size:17px;cursor:pointer}
+.seg input:checked + label{background:var(--coral)}
+.seg input:focus-visible + label{outline:3px dashed var(--ink);outline-offset:3px}
+.check{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:15px}
+.check input{position:absolute;opacity:0;pointer-events:none}
+.box{width:28px;height:28px;border:3px solid var(--ink);border-radius:9px;background:var(--card);display:grid;place-items:center;flex:0 0 auto}
+.box svg{width:18px;height:18px;opacity:0;transform:scale(.3)}
+.check input:checked + .box{background:var(--green)}
+.check input:checked + .box svg{opacity:1;transform:scale(1);animation:tick .35s}
+.check input:focus-visible + .box{outline:3px dashed var(--ink);outline-offset:3px}
+@keyframes tick{0%{transform:scale(.3)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.err{background:var(--coral-l);border:2px solid var(--ink);border-radius:20px;padding:8px 14px;font-size:15px;margin-bottom:14px;display:none}
+.err.show{display:block}
+
+.saved{background:var(--soft);border:3px solid var(--ink);border-radius:28px;padding:18px}
+.saved h3{font-size:20px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.saved h3 svg{width:30px;height:30px}
+.saved .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+/* ---------- 今日幸運色 ---------- */
+.empty{background:var(--soft);border:3px dashed var(--ink);border-radius:28px;padding:26px 20px;text-align:center}
+.empty svg{width:84px;height:84px}
+.lucky-head{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.el-tile{width:76px;height:76px;border:3px solid var(--ink);border-radius:20px;flex:0 0 auto;display:grid;place-items:center}
+.el-tile svg{width:60px;height:60px}
+.lucky-head .t1{font-size:15px}
+.lucky-head .t2{font-size:30px;line-height:1.25}
+.swatches{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:6px 0 18px}
+.sw{text-align:center;font-size:14px}
+.sw i{display:block;width:100%;max-width:88px;margin-left:auto;margin-right:auto;aspect-ratio:1;border:3px solid var(--ink);border-radius:999px;margin-bottom:6px}
+.minor{display:grid;gap:10px}
+.minor .sub-card{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.minor .sub-card .dots{display:flex;gap:4px;flex:0 0 auto}
+.minor .sub-card .dots i{width:26px;height:26px;border-radius:999px;border:2px solid var(--ink);display:block}
+.minor .k{font-size:14px}
+.minor .v{font-size:17px}
+.fortune{margin-top:16px;background:var(--yellow-l)}
+.fortune .god svg{width:24px;height:24px;flex:0 0 auto}
+.fortune .god{font-size:22px;display:flex;align-items:center;gap:8px;margin-bottom:6px}
+
+/* ---------- 命盤 ---------- */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.pl{border:3px solid var(--ink);border-radius:20px;text-align:center;padding:8px 2px 10px;background:var(--card)}
+.pl .h{font-size:13px;border-bottom:2px dashed var(--ink);padding-bottom:4px;margin:0 6px 6px}
+.pl .c{font-size:32px;line-height:1.25;display:block}
+.pl .e{font-size:12px;display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 7px;margin:2px 0 4px}
+.pl.me{background:var(--yellow-l);box-shadow:0 5px 0 var(--ink)}
+.pl.none .c{opacity:.35}
+.bars{display:grid;gap:10px;margin-bottom:16px}
+.bar{display:grid;grid-template-columns:46px 1fr 44px;align-items:center;gap:8px;font-size:15px}
+.bar .track{height:22px;border:3px solid var(--ink);border-radius:999px;background:var(--paper);overflow:hidden}
+.bar .fill{height:100%;border-right:3px solid var(--ink);border-radius:999px;transition:width .6s}
+.bar .num{text-align:right;font-size:14px}
+.persona{margin-top:18px;background:var(--yellow-l)}
+.persona .ph{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.persona .ph .tag{width:68px;height:68px;flex:0 0 auto}
+.persona .ph .k{font-size:14px}
+.persona .ph .v{font-size:22px;line-height:1.3}
+.persona p.txt{font-size:15px;margin-top:8px}
+.persona p.txt:first-of-type{margin-top:0}
+.persona .lab{display:inline-block;border:2px solid var(--ink);border-radius:999px;padding:0 10px;font-size:13px;margin-right:6px;background:var(--card)}
+
+/* ---------- 娃娃推薦 ---------- */
+.top-pick{position:relative;margin-bottom:22px}
+.badge{position:absolute;top:-14px;right:18px;background:var(--coral);border:3px solid var(--ink);border-radius:999px;padding:2px 12px 2px 8px;font-size:14px;display:flex;align-items:center;gap:4px}
+.badge svg{width:18px;height:18px}
+.brand-card{margin-bottom:18px}
+.brand-card .bh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.brand-card .bh h3{font-size:21px}
+.doll{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:2px dashed var(--ink)}
+.doll:first-of-type{border-top:0;padding-top:0}
+.doll .tag{width:64px;height:64px;flex:0 0 auto}
+.top-pick .tag{width:84px;height:84px}
+.doll .nm{font-size:17px;line-height:1.4}
+.doll .why{font-size:14px;margin-top:4px}
+.doll .chips{margin-top:6px}
+.note-small{font-size:13px;margin-top:4px}
+
+/* ---------- 小提醒 ---------- */
+.notes{display:grid;gap:12px}
+.notes .sub-card h4{font-size:18px;margin-bottom:4px}
+.notes .sub-card p{font-size:15px}
+.notes .sub-card:nth-child(4n+1){background:var(--coral-l)}
+.notes .sub-card:nth-child(4n+2){background:var(--yellow-l)}
+.notes .sub-card:nth-child(4n+3){background:var(--water-l)}
+.notes .sub-card:nth-child(4n+4){background:var(--green-l)}
+
+footer{text-align:center;padding:10px 16px 40px}
+footer svg{width:120px;height:80px}
+footer p{font-size:16px}
+
+/* ---------- 插圖動畫 ---------- */
+.cloud-a{animation:drift 11s ease-in-out infinite alternate}
+.cloud-b{animation:drift 13s ease-in-out infinite alternate-reverse}
+.cloud-c{animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{from{transform:translateX(-10px)}to{transform:translateX(12px)}}
+.rays{transform-box:fill-box;transform-origin:center;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 0;animation:sway 3.2s ease-in-out infinite alternate}
+.sway.b{animation-duration:3.8s;animation-direction:alternate-reverse}
+@keyframes sway{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.bob{animation:bob 3s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-2px)}to{transform:translateY(3px)}}
+.drip{animation:drip 1.8s ease-in infinite}
+.drip.d2{animation-delay:.6s}.drip.d3{animation-delay:1.2s}
+@keyframes drip{0%{transform:translateY(-3px);opacity:0}30%{opacity:1}100%{transform:translateY(9px);opacity:0}}
+.twinkle{transform-box:fill-box;transform-origin:center;animation:twinkle 2.6s ease-in-out infinite}
+.twinkle.d2{animation-delay:.9s}.twinkle.d3{animation-delay:1.6s}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.75)}}
+.plane{animation:plane 4s ease-in-out infinite alternate}
+@keyframes plane{from{transform:translate(0,0) rotate(-3deg)}to{transform:translate(6px,-5px) rotate(3deg)}}
+
+/* 彈入 */
+.pop-in{animation:popin .55s cubic-bezier(.3,1.4,.5,1) both}
+@keyframes popin{0%{opacity:0;transform:translateY(16px)}60%{opacity:1;transform:translateY(-7px)}100%{transform:translateY(0)}}
+.zoom-in{animation:zoomin .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes zoomin{0%{transform:scale(.4)}100%{transform:scale(1)}}
+
+/* 減少動態 */
+@media (prefers-reduced-motion: reduce){
+  html:not(.motion-on){scroll-behavior:auto}
+  html:not(.motion-on) *,html:not(.motion-on) *::before,html:not(.motion-on) *::after{animation:none!important;transition:none!important}
+}
+html.motion-off{scroll-behavior:auto}
+html.motion-off *,html.motion-off *::before,html.motion-off *::after{animation:none!important;transition:none!important}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (min-width:600px){.hero h1{font-size:46px}}
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="主選單">
+  <div class="in">
+    <a class="brand" href="#home" aria-label="今日幸運娃，回到首頁">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="#3E3A39" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><circle cx="10" cy="12" r="5" fill="#F6D27A"/><circle cx="30" cy="12" r="5" fill="#F6D27A"/><circle cx="10" cy="12" r="2" fill="#FFFCF6" stroke="none"/><circle cx="30" cy="12" r="2" fill="#FFFCF6" stroke="none"/><ellipse cx="20" cy="23" rx="14" ry="13" fill="#F6D27A"/><ellipse cx="20" cy="27" rx="5.5" ry="4.2" fill="#FFFCF6"/><circle cx="14.5" cy="21.5" r="1.8" fill="#3E3A39" stroke="none"/><circle cx="25.5" cy="21.5" r="1.8" fill="#3E3A39" stroke="none"/><ellipse cx="20" cy="26" rx="1.8" ry="1.3" fill="#3E3A39" stroke="none"/><circle cx="11" cy="27" r="2.4" fill="#F2A497" stroke="none"/><circle cx="29" cy="27" r="2.4" fill="#F2A497" stroke="none"/></g></svg>
+      <span>今日幸運娃</span>
+    </a>
+    <div class="links" id="navLinks">
+      <a href="#home">首頁</a>
+      <a href="#profile">我的資料</a>
+      <a href="#lucky">今日幸運色</a>
+      <a href="#chart">八字命盤</a>
+      <a href="#dolls">娃娃推薦</a>
+      <a href="#notes">小提醒</a>
+    </div>
+    <button class="motion-btn" id="motionBtn" type="button" aria-pressed="false" aria-label="減少動態效果">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="#3E3A39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0" id="motionWave"/></g></svg>
+    </button>
+  </div>
+</nav>
+
+<main>
+<!-- ============ 首頁 ============ -->
+<section id="home" class="hero">
+  <div class="hero-art">
+    <svg viewBox="0 0 360 240" role="img" aria-label="繪本風插圖：太陽、白雲和會下小雨的烏雲娃娃下，一條彩繩掛著六隻娃娃：發芽小刺蝟、火苗糰子、圍巾兔子、飯糰小子、鈴鐺海豹和小鯨魚">
+      <g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+        <rect x="-5" y="-5" width="370" height="250" fill="#A8D3E6" stroke="none"/>
+        <g transform="translate(180 40)">
+          <g class="rays" fill="none"><path d="M0-30v-7M0 30v7M-30 0h-7M30 0h7M-21-21l-5-5M21 21l5 5M-21 21l-5 5M21-21l5-5"/></g>
+          <circle r="20" fill="#F6D27A"/>
+          <circle cx="-6" cy="-2" r="2.2" fill="#3E3A39" stroke="none"/><circle cx="6" cy="-2" r="2.2" fill="#3E3A39" stroke="none"/>
+          <path d="M-4 4q4 4 8 0" fill="none"/>
+          <circle cx="-12" cy="5" r="3.5" fill="#F2A497" stroke="none"/><circle cx="12" cy="5" r="3.5" fill="#F2A497" stroke="none"/>
+        </g>
+        <g class="cloud-a"><path d="M36 46h50a12 12 0 0 0-6-22 17 17 0 0 0-30-4 13 13 0 0 0-14 26z" fill="#FFFFFF"/><circle cx="54" cy="38" r="2" fill="#F2A497" stroke="none"/></g>
+        <g class="cloud-b">
+          <path class="drip" d="M272 52c-2 3-3 5-3 6a3 3 0 0 0 6 0c0-1-1-3-3-6z" fill="#A8D3E6"/>
+          <path class="drip d2" d="M290 54c-2 3-3 5-3 6a3 3 0 0 0 6 0c0-1-1-3-3-6z" fill="#A8D3E6"/>
+          <path class="drip d3" d="M308 52c-2 3-3 5-3 6a3 3 0 0 0 6 0c0-1-1-3-3-6z" fill="#A8D3E6"/>
+          <path d="M262 46h58a13 13 0 0 0-5-25 18 18 0 0 0-33-5 14 14 0 0 0-20 30z" fill="#C9CDD2"/>
+          <path d="M280 34q3 3 6 0M294 34q3 3 6 0" fill="none" stroke-width="2.5"/>
+          <ellipse cx="290" cy="40" rx="2.2" ry="2.6" fill="#3E3A39" stroke="none"/>
+          <circle cx="276" cy="39" r="3.2" fill="#F2A497" stroke="none"/><circle cx="304" cy="39" r="3.2" fill="#F2A497" stroke="none"/>
+        </g>
+        <path class="twinkle" d="M118 62l3 6 6 1-5 4 1 6-5-3-5 3 1-6-5-4 6-1z" fill="#F6D27A"/>
+        <path class="twinkle d2" d="M246 66l2.5 5 5 .8-4 3.5 1 5-4.5-2.5-4.5 2.5 1-5-4-3.5 5-.8z" fill="#FFFFFF"/>
+        <path d="M-5 206q60-22 120-8t130-4 120 6v50H-5z" fill="#B9DAA5"/>
+        <g fill="#FFFFFF"><circle cx="40" cy="218" r="4"/><circle cx="150" cy="222" r="4"/><circle cx="268" cy="216" r="4"/><circle cx="330" cy="224" r="4"/></g>
+        <g fill="#F6D27A" stroke="none"><circle cx="40" cy="218" r="1.6"/><circle cx="150" cy="222" r="1.6"/><circle cx="268" cy="216" r="1.6"/><circle cx="330" cy="224" r="1.6"/></g>
+        <path d="M-5 78Q180 150 365 78" fill="none"/>
+        <g id="heroDolls"></g>
+      </g>
+    </svg>
+  </div>
+  <h1>今日幸運娃</h1>
+  <p class="lead">用你的生辰八字，排出今天的幸運色，再挑一隻同色的飾品娃娃掛在包包上。</p>
+  <div class="chips"><span class="pill water" id="todayPill">今天</span><span class="pill yellow">三麗鷗</span><span class="pill green">Jellycat</span><span class="pill coral">米飛兔</span></div>
+  <div class="today-box" id="todayBox" aria-label="今日干支"></div>
+  <div class="hero-greet" id="heroGreet"></div>
+</section>
+
+<!-- ============ 我的資料 ============ -->
+<section id="profile">
+  <h2 class="sec-title">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="12" fill="#F2A497"/><rect x="14" y="13" width="20" height="24" rx="4" fill="#FFFFFF"/><path d="M19 21h10M19 27h10M19 32h6" fill="none"/></g></svg>
+    我的資料
+  </h2>
+  <div id="savedBox"></div>
+  <form class="card" id="form" novalidate>
+    <p class="sec-sub" style="margin:0 0 16px">第一次填寫後會記在這台裝置的瀏覽器裡，下次打開就直接看今天的結果。</p>
+    <div class="err" id="err" role="alert"></div>
+    <div class="field">
+      <label for="nick">小名（選填）</label>
+      <input class="inp" id="nick" maxlength="12" placeholder="例如：小晴" autocomplete="nickname">
+    </div>
+    <div class="field">
+      <span class="lab" id="gLab">性別</span>
+      <div class="seg" role="radiogroup" aria-labelledby="gLab">
+        <input type="radio" name="gender" id="gF" value="F"><label for="gF">女生</label>
+        <input type="radio" name="gender" id="gM" value="M"><label for="gM">男生</label>
+      </div>
+    </div>
+    <div class="field">
+      <label for="place">出生地縣市</label>
+      <select class="inp" id="place"></select>
+      <p class="hint">用來把時鐘時間校正成當地的「真太陽時」。</p>
+    </div>
+    <div class="field">
+      <label for="bdate">出生日期（國曆）</label>
+      <input class="inp" type="date" id="bdate" min="1901-01-01" max="2099-12-31">
+    </div>
+    <div class="field">
+      <label for="btime">出生時間</label>
+      <input class="inp" type="time" id="btime">
+      <div style="margin-top:10px;display:grid;gap:10px">
+        <label class="check"><input type="checkbox" id="noTime"><span class="box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>不知道出生時間（只排三柱）</label>
+        <label class="check"><input type="checkbox" id="dst"><span class="box"><svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9.5l4 4 8-9" fill="none" stroke="#3E3A39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>出生時台灣正在實施日光節約時間</label>
+      </div>
+      <p class="hint">台灣曾在 1945–1961、1974–1975、1979 年的夏季實施日光節約時間，不確定可以問家人或查出生證明。</p>
+    </div>
+    <button class="btn block" type="submit">排出我的八字</button>
+  </form>
+</section>
+
+<!-- ============ 今日幸運色 ============ -->
+<section id="lucky">
+  <h2 class="sec-title">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="12" fill="#F6D27A"/><circle cx="18" cy="20" r="6" fill="#F2A497"/><circle cx="30" cy="20" r="6" fill="#A8D3E6"/><circle cx="24" cy="30" r="6" fill="#B9DAA5"/></g></svg>
+    今日幸運色
+  </h2>
+  <div id="luckyBox"></div>
+</section>
+
+<!-- ============ 八字命盤 ============ -->
+<section id="chart">
+  <h2 class="sec-title">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="12" fill="#A8D3E6"/><path d="M15 14v20M22 14v20M29 14v20M36 14v20" fill="none"/><circle cx="15" cy="24" r="3" fill="#FFFFFF"/><circle cx="29" cy="20" r="3" fill="#F6D27A"/></g></svg>
+    八字命盤
+  </h2>
+  <div id="chartBox"></div>
+</section>
+
+<!-- ============ 娃娃推薦 ============ -->
+<section id="dolls">
+  <h2 class="sec-title">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="12" fill="#B9DAA5"/><circle cx="24" cy="15" r="4" fill="#FFFFFF"/><path d="M24 19v3" fill="none"/><path d="M15 26q0-4 4-4h10q4 0 4 4v6q0 5-5 5h-8q-5 0-5-5z" fill="#F2A497"/><path d="M20 30q4 3 8 0" fill="none"/></g></svg>
+    飾品娃娃推薦
+  </h2>
+  <div id="dollBox"></div>
+</section>
+
+<!-- ============ 小提醒 ============ -->
+<section id="notes">
+  <h2 class="sec-title">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="6" width="36" height="36" rx="12" fill="#FFFFFF"/><path d="M16 16h16v12l-8 6-8-6z" fill="#F6D27A"/><path d="M20 22h8" fill="none"/></g></svg>
+    小提醒
+  </h2>
+  <div class="notes">
+    <div class="sub-card"><h4>開心就好</h4><p>這是給生活加點小樂趣的娛樂參考，不是正式命理諮詢。今天穿什麼、掛哪隻娃娃，最後還是你喜歡最重要。</p></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <svg viewBox="0 0 120 80" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M10 66q50-14 100 0" fill="none"/>
+    <g class="sway"><path d="M30 8v14" fill="none"/><rect x="20" y="22" width="20" height="26" rx="8" fill="#F2A497"/><circle cx="30" cy="29" r="2.5" fill="#FFFFFF"/></g>
+    <g class="sway b"><path d="M60 4v14" fill="none"/><rect x="50" y="18" width="20" height="26" rx="8" fill="#F6D27A"/><circle cx="60" cy="25" r="2.5" fill="#FFFFFF"/></g>
+    <g class="sway"><path d="M90 8v14" fill="none"/><rect x="80" y="22" width="20" height="26" rx="8" fill="#A8D3E6"/><circle cx="90" cy="29" r="2.5" fill="#FFFFFF"/></g>
+  </g></svg>
+  <p>願今天的你，被剛剛好的顏色和小娃娃溫柔陪著。</p>
+</footer>
+
+<script>
+/* =========================================================
+   可修改的資料區
+   PLACES：出生地縣市與經度
+   COLORS：五行對應的幸運色（名稱、色碼）
+   DOLLS：各品牌、各五行推薦的娃娃（color 對應 COLORS 的索引）
+   GODS：今日十神的小運勢文字
+   ========================================================= */
+const PLACES = [
+  ["基隆市",121.74],["臺北市",121.56],["新北市",121.46],["桃園市",121.30],["新竹市",120.97],["新竹縣",121.02],
+  ["苗栗縣",120.82],["臺中市",120.68],["彰化縣",120.54],["南投縣",120.68],["雲林縣",120.53],["嘉義市",120.45],
+  ["嘉義縣",120.30],["臺南市",120.21],["高雄市",120.31],["屏東縣",120.49],["宜蘭縣",121.75],["花蓮縣",121.60],
+  ["臺東縣",121.14],["澎湖縣",119.57],["金門縣",118.32],["連江縣",119.95],["海外／其他（不校正）",120]
+];
+
+const EL = ["木","火","土","金","水"];
+const EL_FILL = ["#B9DAA5","#F2A497","#F6D27A","#FFFFFF","#A8D3E6"];
+const EL_SOFT = ["#EAF4E3","#FCE7E2","#FDF3D8","#F6EFE3","#E5F2F8"];
+
+const COLORS = [
+  [{n:"若竹綠",c:"#8CC084"},{n:"薄荷綠",c:"#B9DAA5"},{n:"松石青",c:"#5FA58E"}],
+  [{n:"珊瑚紅",c:"#E8776A"},{n:"櫻花粉",c:"#F2A497"},{n:"藤紫",c:"#B79AD0"}],
+  [{n:"山吹黃",c:"#F6D27A"},{n:"奶茶棕",c:"#C9A27E"},{n:"杏仁米",c:"#EADBC4"}],
+  [{n:"牛奶白",c:"#FFFFFF"},{n:"香檳金",c:"#E6CF9A"},{n:"月光銀",c:"#C9CDD2"}],
+  [{n:"水色",c:"#A8D3E6"},{n:"海軍藍",c:"#3F5E8C"},{n:"墨黑",c:"#3E3A39"}]
+];
+
+const BRANDS = [
+  {id:"sanrio", name:"三麗鷗", pill:"coral"},
+  {id:"jelly",  name:"Jellycat", pill:"green"},
+  {id:"miffy",  name:"米飛兔", pill:"water"}
+];
+const DOLLS = {
+  sanrio:[
+    [{name:"大眼蛙 Keroppi 吊飾",color:0,why:"一身清爽的綠，替你補上木的生長力。"},{name:"人魚漢頓 Hangyodon 吊飾",color:2,why:"藍綠色系，溫和地帶來木氣，又不搶戲。"}],
+    [{name:"美樂蒂 My Melody 吊飾",color:1,why:"粉色頭巾剛好是火的柔和版，讓人緣變好。"},{name:"Hello Kitty 紅蝴蝶結款吊飾",color:0,why:"一點紅就很有存在感，適合需要被看見的日子。"}],
+    [{name:"布丁狗 Pompompurin 吊飾",color:0,why:"奶黃配咖啡色小帽，土氣滿滿，穩穩的。"},{name:"蛋黃哥 Gudetama 吊飾",color:0,why:"懶懶的黃色，提醒你今天慢慢來也可以。"}],
+    [{name:"大耳狗 Cinnamoroll 吊飾",color:0,why:"雪白蓬鬆，金氣乾淨俐落。"},{name:"帕恰狗 Pochacco 吊飾",color:0,why:"白底小狗，適合想要清楚做決定的一天。"}],
+    [{name:"酷洛米 Kuromi 吊飾",color:2,why:"黑色帽子加紫色，水氣深沉又有個性。"},{name:"酷企鵝 Bad Badtz-Maru 吊飾",color:2,why:"黑白分明，替你補足水的靈活。"}]
+  ],
+  jelly:[
+    [{name:"Amuseable Avocado 酪梨吊飾",color:0,why:"圓滾滾的綠色酪梨，木氣又療癒。"},{name:"Bashful Bunny 鼠尾草綠色款",color:1,why:"淡淡的綠，日常好搭不突兀。"}],
+    [{name:"Bashful Bunny 粉紅色款",color:1,why:"柔軟的粉色，溫暖的火氣剛剛好。"},{name:"紅色系 Amuseables 小吊飾",color:0,why:"挑草莓、愛心這類紅色造型，元氣加倍。"}],
+    [{name:"Bartholomew Bear 巴塞羅繆熊",color:1,why:"奶茶色大熊，給人踏實的土氣安全感。"},{name:"Amuseable Croissant 可頌吊飾",color:0,why:"金黃酥脆的可頌，土氣帶點好心情。"}],
+    [{name:"Bashful Bunny 奶油白色款",color:0,why:"乾淨的米白，金氣柔和不刺眼。"},{name:"Amuseable Cloud 雲朵吊飾",color:2,why:"白白灰灰的雲，讓思緒清楚一點。"}],
+    [{name:"Bashful Bunny 藍色款",color:0,why:"安靜的藍，水氣流動，心也比較靜。"},{name:"藍色系海洋動物小吊飾",color:1,why:"挑深藍的款式，水的力量更集中。"}]
+  ],
+  miffy:[
+    [{name:"米飛兔 綠色衣服款",color:0,why:"小白兔穿綠衣，木氣清新又可愛。"},{name:"米飛兔 燈芯絨綠色款",color:1,why:"絨絨的質感，綠色更溫柔。"}],
+    [{name:"米飛兔 經典紅橘洋裝款",color:0,why:"最經典的紅橘色洋裝，就是火的顏色。"},{name:"米飛兔 粉色洋裝款",color:1,why:"粉粉嫩嫩，火氣溫和好親近。"}],
+    [{name:"波里斯熊 Boris",color:1,why:"米飛的好朋友，咖啡色小熊就是土氣代表。"},{name:"米飛兔 黃色衣服款",color:0,why:"亮黃色讓人一看就心情好。"}],
+    [{name:"米飛兔 白色基本款",color:0,why:"純白絨毛，金氣乾淨簡單。"},{name:"米飛兔 香檳色系款",color:1,why:"看到淡金、香檳色的款式就收下。"}],
+    [{name:"米飛兔 藍色洋裝款",color:0,why:"藍色小洋裝，水氣清爽。"},{name:"米飛兔 海軍風條紋款",color:1,why:"深藍條紋，讓水氣更穩定。"}]
+  ]
+};
+
+const GODS = {
+  "比肩":"今天身邊的朋友就是你的力量，適合一起做事、互相打氣。",
+  "劫財":"容易想衝動花錢，購物車先放一晚再說。",
+  "食神":"口福和靈感都不錯，吃點好吃的、寫寫東西都很順。",
+  "傷官":"想法很多、話也很多，表達前先深呼吸一下會更圓滿。",
+  "偏財":"有點意外小收穫的運氣，抽獎、撿便宜可以試試看。",
+  "正財":"適合整理帳目、做規劃，腳踏實地的努力會有回報。",
+  "七殺":"壓力和挑戰比較多，記得給自己留一段休息時間。",
+  "正官":"適合守規矩、把該做的事做好，容易被長輩或主管肯定。",
+  "偏印":"直覺特別敏銳，適合安靜獨處、看書或學新東西。",
+  "正印":"有貴人照顧的一天，別不好意思開口請人幫忙。"
+};
+
+/* 個性小說明：依日主天干 */
+const PERSONA = [
+  {t:"甲木｜挺拔的大樹", d:"正直、有擔當，總想往上長、把事情做好，是朋友眼中可以依靠的人。", tip:"偶爾有點固執，試著彎一下腰，風來了反而更穩。"},
+  {t:"乙木｜柔軟的花草", d:"溫柔細膩、適應力強，懂得順勢而為，人緣通常很好。", tip:"容易想太多、在意別人眼光，多相信自己一點。"},
+  {t:"丙火｜閃亮的太陽", d:"熱情大方、樂於分享，走到哪裡都很有存在感，能帶動氣氛。", tip:"性子比較急，答應之前先想一下自己忙不忙得過來。"},
+  {t:"丁火｜溫暖的燭光", d:"細心體貼、內斂有想法，默默照亮身邊的人，很會察覺別人的情緒。", tip:"心情容易起伏，累的時候記得也照顧一下自己。"},
+  {t:"戊土｜穩重的高山", d:"穩重可靠、包容力大，說到做到，是大家的安全感來源。", tip:"比較慢熱，也有點堅持己見，偶爾換個角度看看會更輕鬆。"},
+  {t:"己土｜溫柔的田園", d:"務實細膩、很會照顧人，多才多藝，做事有條理。", tip:"容易替別人操心，別把所有事都往自己身上攬。"},
+  {t:"庚金｜爽朗的鋼鐵", d:"直率果斷、講義氣，是行動派，遇到困難會直接面對。", tip:"說話有時太直，加一點溫柔，效果會更好。"},
+  {t:"辛金｜閃耀的珠寶", d:"精緻有品味、重視細節，自尊心強，對自己要求很高。", tip:"有點在意面子，允許自己不完美也沒關係。"},
+  {t:"壬水｜自由的大海", d:"聰明靈活、點子很多，熱愛自由，學東西很快。", tip:"容易三分鐘熱度，挑一兩件事好好堅持會很驚人。"},
+  {t:"癸水｜清透的雨露", d:"溫柔敏感、直覺很準，善解人意，常常是很好的傾聽者。", tip:"心事容易悶在心裡，找信任的人說說話會舒服很多。"}
+];
+const EL_MORE = ["上進心強、喜歡學新東西","熱情有感染力、表達力好","穩定踏實、重視承諾","有原則、做事講效率","聰明善變通、觀察力好"];
+const EL_LESS = ["可以多給自己一點彈性和新嘗試","可以多替自己加點熱情和行動力","可以多培養耐心和安定感","可以多練習果斷做決定","可以多讓自己放鬆、保持靈活"];
+
+/* =========================================================
+   八字計算
+   ========================================================= */
+const STEMS = "甲乙丙丁戊己庚辛壬癸";
+const BRANCHES = "子丑寅卯辰巳午未申酉戌亥";
+const BR_EL = [4,2,0,0,2,1,1,2,3,3,2,4];
+const HIDDEN = [[9],[5,9,7],[0,2,4],[1],[4,1,9],[2,6,4],[3,5],[5,3,1],[6,8,4],[7],[4,7,3],[8,0]];
+const HW = [1,.5,.3];
+const WEEK = "日一二三四五六";
+const stemEl = s => Math.floor(s/2);
+const mod = (a,n) => ((a%n)+n)%n;
+const rad = d => d*Math.PI/180;
+
+function sunLongitude(utcMs){
+  const jd = utcMs/86400000 + 2440587.5;
+  const T = (jd-2451545)/36525;
+  const L0 = 280.46646 + 36000.76983*T + .0003032*T*T;
+  const M = 357.52911 + 35999.05029*T - .0001537*T*T;
+  const C = (1.914602-.004817*T-.000014*T*T)*Math.sin(rad(M)) + (.019993-.000101*T)*Math.sin(rad(2*M)) + .000289*Math.sin(rad(3*M));
+  const om = 125.04 - 1934.136*T;
+  return mod(L0 + C - .00569 - .00478*Math.sin(rad(om)), 360);
+}
+function jdn(y,m,d){
+  const a = Math.floor((14-m)/12), yy = y+4800-a, mm = m+12*a-3;
+  return d + Math.floor((153*mm+2)/5) + 365*yy + Math.floor(yy/4) - Math.floor(yy/100) + Math.floor(yy/400) - 32045;
+}
+function dayPillar(y,m,d){ const i = mod(jdn(y,m,d)+49,60); return [i%10,i%12]; }
+function yearMonth(utcMs, localYear, localMonth){
+  const lam = sunLongitude(utcMs);
+  let Y = localYear;
+  if(localMonth<=2 && lam>=270 && lam<315) Y -= 1;
+  const ys = mod(Y-4,10), yb = mod(Y-4,12);
+  const mi = Math.floor(mod(lam-315,360)/30);
+  return {year:[ys,yb], month:[mod((ys%5)*2+2+mi,10), (mi+2)%12]};
+}
+function eqTime(y,m,d){
+  const n = jdn(y,m,d) - jdn(y,1,1) + 1;
+  const B = rad(360*(n-81)/365);
+  return 9.87*Math.sin(2*B) - 7.53*Math.cos(B) - 1.5*Math.sin(B);
+}
+
+function birthChart(p){
+  const [Y,Mo,D] = p.date.split("-").map(Number);
+  let h = 12, mi = 0;
+  if(!p.noTime && p.time){ [h,mi] = p.time.split(":").map(Number); }
+  let localMs = Date.UTC(Y,Mo-1,D,h,mi);
+  if(p.dst && !p.noTime) localMs -= 3600e3;
+  const utcMs = localMs - 8*3600e3;
+  const lon = (PLACES.find(x=>x[0]===p.place)||[0,120])[1];
+  const adjMin = p.noTime ? 0 : (lon-120)*4 + eqTime(Y,Mo,D);
+  const solarMs = localMs + adjMin*60e3;
+  const sd = new Date(solarMs);
+  const sh = sd.getUTCHours();
+  const dd = new Date(!p.noTime && sh>=23 ? solarMs + 3600e3 : solarMs);
+  const lm = new Date(localMs);
+  const ym = yearMonth(utcMs, lm.getUTCFullYear(), lm.getUTCMonth()+1);
+  const day = dayPillar(dd.getUTCFullYear(), dd.getUTCMonth()+1, dd.getUTCDate());
+  let hour = null;
+  if(!p.noTime){
+    const hb = Math.floor(((sh+1)%24)/2);
+    hour = [mod((day[0]%5)*2+hb,10), hb];
+  }
+  const solarStr = p.noTime ? "" : String(sh).padStart(2,"0")+":"+String(sd.getUTCMinutes()).padStart(2,"0");
+  return {year:ym.year, month:ym.month, day, hour, adjMin, solarStr};
+}
+
+function addPillar(score, pl, w){
+  if(!pl) return;
+  score[stemEl(pl[0])] += w;
+  HIDDEN[pl[1]].forEach((s,i)=>{ score[stemEl(s)] += w*HW[i]; });
+}
+function chartScore(c){
+  const s = [0,0,0,0,0];
+  addPillar(s,c.year,1); addPillar(s,c.day,1); addPillar(s,c.hour,1);
+  score1(s,c.month);
+  return s;
+  function score1(s,pl){ s[stemEl(pl[0])] += 1; HIDDEN[pl[1]].forEach((x,i)=>{ s[stemEl(x)] += 1.5*HW[i]; }); }
+}
+
+function todayInfo(now){
+  const tw = new Date(now.getTime() + 8*3600e3);
+  const y = tw.getUTCFullYear(), m = tw.getUTCMonth()+1, d = tw.getUTCDate();
+  const ym = yearMonth(now.getTime(), y, m);
+  return {y,m,d,w:tw.getUTCDay(), year:ym.year, month:ym.month, day:dayPillar(y,m,d), key:`${y}-${m}-${d}`};
+}
+
+function analyse(profile, today){
+  const c = birthChart(profile);
+  const score = chartScore(c);
+  const total = score.reduce((a,b)=>a+b,0);
+  const D = stemEl(c.day[0]);
+  const support = score[D] + score[(D+4)%5];
+  const strong = support/total >= .5;
+  const fav = strong ? [(D+1)%5,(D+2)%5,(D+3)%5] : [(D+4)%5, D];
+  const comb = score.slice();
+  addPillar(comb, today.day, 2); addPillar(comb, today.month, 1); addPillar(comb, today.year, .5);
+  const favSorted = fav.slice().sort((a,b)=>comb[a]-comb[b]);
+  const lucky = favSorted[0], second = favSorted[1];
+  const others = [0,1,2,3,4].filter(e=>!fav.includes(e)).sort((a,b)=>comb[b]-comb[a]);
+  const avoid = others[0];
+  // 今日十神
+  const tS = today.day[0], tE = stemEl(tS), rel = mod(tE-D,5), same = (tS%2)===(c.day[0]%2);
+  const god = [["比肩","劫財"],["食神","傷官"],["偏財","正財"],["七殺","正官"],["偏印","正印"]][rel][same?0:1];
+  // 大運順逆：陽年男、陰年女順行
+  const yangYear = c.year[0]%2===0;
+  const forward = (profile.gender==="M") === yangYear;
+  return {c, score, total, D, strong, fav, lucky, second, avoid, god, forward};
+}
+
+/* =========================================================
+   儲存
+   ========================================================= */
+const KEY = "lucky-doll-profile-v1";
+const loadProfile = () => { try{ const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : null; }catch(e){ return null; } };
+const saveProfile = p => { try{ localStorage.setItem(KEY, JSON.stringify(p)); }catch(e){} };
+const clearProfile = () => { try{ localStorage.removeItem(KEY); }catch(e){} };
+
+/* =========================================================
+   畫面
+   ========================================================= */
+const $ = id => document.getElementById(id);
+const gzStr = p => STEMS[p[0]]+BRANCHES[p[1]];
+const esc = s => String(s).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const S = 'stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+
+function elIcon(e){
+  const face = (cx,cy)=>`<circle cx="${cx-5}" cy="${cy}" r="2" fill="#3E3A39" stroke="none"/><circle cx="${cx+5}" cy="${cy}" r="2" fill="#3E3A39" stroke="none"/><circle cx="${cx-10}" cy="${cy+5}" r="3" fill="#F2A497" stroke="none"/><circle cx="${cx+10}" cy="${cy+5}" r="3" fill="#F2A497" stroke="none"/>`;
+  const icons = [
+    `<path d="M32 58V40" fill="none"/><path d="M32 44l-7-5" fill="none"/><circle cx="32" cy="26" r="18" fill="#B9DAA5"/>${face(32,25)}`,
+    `<path d="M32 58c-12 0-18-8-18-17 0-10 8-14 10-24 4 4 6 8 6 12 3-3 4-7 4-10 8 6 14 13 14 22 0 9-6 17-16 17z" fill="#F2A497"/><path d="M32 58c-6 0-9-4-9-9 0-5 5-8 7-12 2 3 3 5 3 7 2-1 3-3 3-5 3 3 5 6 5 10 0 5-4 9-9 9z" fill="#F6D27A"/>`,
+    `<path d="M6 54l18-30 8 10 8-14 18 34z" fill="#F6D27A"/><path d="M20 31l4-7 4 5" fill="#FFFCF6"/>${face(36,44)}`,
+    `<circle cx="32" cy="32" r="24" fill="#FFFCF6"/><circle cx="32" cy="32" r="17" fill="#F6D27A"/><rect x="27" y="27" width="10" height="10" rx="2" fill="#FFFCF6"/>`,
+    `<path d="M32 6c10 14 18 24 18 34a18 18 0 0 1-36 0c0-10 8-20 18-34z" fill="#A8D3E6"/>${face(32,40)}`
+  ];
+  return `<svg viewBox="0 0 64 64" aria-hidden="true"><g ${S}>${icons[e]}</g></svg>`;
+}
+/* 原創「五行小守護娃」：依五行換造型，依幸運色換顏色 */
+function isDark(hex){ const n=parseInt(hex.slice(1),16); return (((n>>16)&255)*.299+((n>>8)&255)*.587+(n&255)*.114) < 110; }
+function mascot(e, fill){
+  const eye = isDark(fill) ? "#FFFFFF" : "#3E3A39";
+  const face = (cx,cy)=>`<circle cx="${cx-6}" cy="${cy}" r="2.3" fill="${eye}" stroke="none"/><circle cx="${cx+6}" cy="${cy}" r="2.3" fill="${eye}" stroke="none"/><path d="M${cx-2.5} ${cy+4}q2.5 2.5 5 0" fill="none" stroke="${eye}" stroke-width="2"/><circle cx="${cx-11}" cy="${cy+5}" r="3.2" fill="#F2A497" stroke="none"/><circle cx="${cx+11}" cy="${cy+5}" r="3.2" fill="#F2A497" stroke="none"/>`;
+  const ring = `<circle cx="14" cy="9" r="5" fill="none"/><path d="M17 13l3 5" fill="none"/>`;
+  const body = [
+    /* 木：頭頂長芽的小刺蝟 */
+    `<path d="M30 22v-8" fill="none"/><path d="M30 15c-2-6-9-7-11-4 3 4 8 5 11 4z" fill="#B9DAA5"/><path d="M30 15c2-6 9-7 11-4-3 4-8 5-11 4z" fill="#B9DAA5"/>
+     <path d="M12 50c-3-8 0-16 5-20l2-6 5 4 6-6 6 6 5-4 2 6c5 4 8 12 5 20z" fill="${fill}"/>
+     <ellipse cx="30" cy="42" rx="12" ry="9" fill="#FFFCF6"/>${face(30,40)}<path d="M20 50v4M40 50v4" fill="none"/>`,
+    /* 火：頭上一撮火苗的圓糰子 */
+    `<path d="M30 24c-5-3-6-8-3-13 1 3 3 4 4 4 0-3 2-6 5-7-1 5 3 8 0 14z" fill="#F6D27A"/>
+     <path d="M47 46c6 0 9-5 7-10" fill="none"/>
+     <ellipse cx="30" cy="40" rx="19" ry="17" fill="${fill}"/>${face(30,39)}<path d="M23 56v2M37 56v2" fill="none"/>`,
+    /* 土：飯糰小子 */
+    `<path d="M30 18c4 0 6 3 9 8l8 15c3 6 0 13-7 13H20c-7 0-10-7-7-13l8-15c3-5 5-8 9-8z" fill="${fill}"/>
+     <path d="M21 46h18v8H21z" fill="#3E3A39"/>${face(30,35)}`,
+    /* 金：戴小鈴鐺的圓海豹 */
+    `<path d="M12 46c-4-14 4-26 18-26s22 12 18 26c-2 6-8 9-18 9s-16-3-18-9z" fill="${fill}"/>
+     <path d="M14 48l-6 4M46 48l6 4" fill="none"/>
+     <path d="M19 44q11 5 22 0" fill="none"/><circle cx="30" cy="49" r="4.5" fill="#F6D27A"/>${face(30,35)}`,
+    /* 水：噴小水花的圓鯨魚 */
+    `<path d="M30 20v-5M30 15c-3-3-6-3-8-1M30 15c3-3 6-3 8-1" fill="none"/>
+     <path d="M10 42c0-11 9-19 20-19s19 8 19 17c4-2 8-4 9-7 1 6-2 11-7 13-3 6-11 10-21 10-11 0-20-5-20-14z" fill="${fill}"/>
+     <path d="M16 46q14 6 28 0" fill="none"/>${face(28,37)}`
+  ][e];
+  return `<svg class="tag" viewBox="0 0 60 60" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">${ring}${body}</g></svg>`;
+}
+const star = `<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2l2.4 5 5.4.7-4 3.8 1 5.4L10 14.3 5.2 17l1-5.4-4-3.8 5.4-.7z" fill="#F6D27A" stroke="#3E3A39" stroke-width="2" stroke-linejoin="round"/></svg>`;
+
+function renderPlaces(){
+  $("place").innerHTML = `<option value="">請選擇縣市</option>` + PLACES.map(p=>`<option>${p[0]}</option>`).join("");
+}
+
+function renderToday(t){
+  $("todayPill").textContent = `${t.y} 年 ${t.m} 月 ${t.d} 日（${WEEK[t.w]}）`;
+  $("todayBox").innerHTML = [["年",t.year],["月",t.month],["日",t.day]].map(([k,p])=>`<div class="gz"><span class="big">${gzStr(p)}</span><span class="lab">今天的${k}柱</span></div>`).join("");
+}
+
+function renderSaved(p){
+  const box = $("savedBox");
+  if(!p){ box.innerHTML=""; $("form").hidden=false; return; }
+  $("form").hidden = true;
+  box.innerHTML = `<div class="saved">
+    <h3><svg viewBox="0 0 30 30" aria-hidden="true"><g ${S}><path d="M15 26S4 19 4 11a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 8-11 15-11 15z" fill="#F2A497"/></g></svg>已經記住你了${p.nick?`，${esc(p.nick)}`:""}</h3>
+    <div class="chips">
+      <span class="pill coral">${p.gender==="M"?"男生":"女生"}</span>
+      <span class="pill water">${esc(p.place)}</span>
+      <span class="pill yellow">${p.date.replace(/-/g,"／")}</span>
+      <span class="pill green">${p.noTime?"時間不詳":p.time}${p.dst&&!p.noTime?"（日光節約）":""}</span>
+    </div>
+    <div class="acts">
+      <button class="btn small" type="button" id="editBtn">修改資料</button>
+      <button class="btn small" type="button" id="clearBtn">清除資料</button>
+    </div>
+  </div>`;
+  $("editBtn").onclick = ()=>{ fillForm(p); $("form").hidden=false; $("savedBox").innerHTML=""; $("nick").focus(); };
+  $("clearBtn").onclick = ()=>{
+    if(!confirm("要清除儲存的生日資料嗎？")) return;
+    clearProfile(); fillForm(null); renderAll(null,false); $("profile").scrollIntoView({behavior: reduced()?"auto":"smooth"});
+  };
+}
+
+function fillForm(p){
+  $("nick").value = p?.nick || "";
+  $("gF").checked = p?.gender==="F"; $("gM").checked = p?.gender==="M";
+  $("place").value = p?.place || "";
+  $("bdate").value = p?.date || "";
+  $("btime").value = p?.time || "";
+  $("noTime").checked = !!p?.noTime; $("dst").checked = !!p?.dst;
+  $("btime").disabled = !!p?.noTime;
+}
+
+function emptyBlock(text){
+  return `<div class="empty">${bearIcon("#F6D27A")}<p style="margin:8px 0 14px">${text}</p><a class="btn" href="#profile">去填資料</a></div>`;
+}
+
+function renderLucky(a, t, p){
+  const L = a.lucky, cols = COLORS[L];
+  const name = p.nick ? esc(p.nick)+"，" : "";
+  $("luckyBox").innerHTML = `<div class="card">
+    <div class="lucky-head anim">
+      <div class="el-tile zoomable" style="background:${EL_SOFT[L]}">${elIcon(L)}</div>
+      <div><p class="t1">${name}${t.m} 月 ${t.d} 日適合補「${EL[L]}」</p><p class="t2">${cols[0].n}・${cols[1].n}</p></div>
+    </div>
+    <div class="swatches anim">${cols.map(c=>`<div class="sw"><i style="background:${c.c}"></i>${c.n}</div>`).join("")}</div>
+    <div class="minor">
+      <div class="sub-card anim" style="background:${EL_SOFT[a.second]}"><span class="dots">${COLORS[a.second].slice(0,2).map(c=>`<i style="background:${c.c}"></i>`).join("")}</span><div><p class="k">輔助色（${EL[a.second]}）</p><p class="v">${COLORS[a.second][0].n}、${COLORS[a.second][1].n}</p></div></div>
+      <div class="sub-card anim" style="background:var(--soft)"><span class="dots">${COLORS[a.avoid].slice(0,2).map(c=>`<i style="background:${c.c}"></i>`).join("")}</span><div><p class="k">今天少用一點（${EL[a.avoid]}）</p><p class="v">${COLORS[a.avoid][0].n}、${COLORS[a.avoid][1].n}</p></div></div>
+    </div>
+    <div class="sub-card fortune anim">
+      <p class="god">${star}今日十神：${a.god}</p>
+      <p>${GODS[a.god]}</p>
+    </div>
+  </div>`;
+}
+
+function renderChart(a, p){
+  const c = a.c;
+  const cols = [["年柱",c.year],["月柱",c.month],["日柱",c.day],["時柱",c.hour]];
+  const max = Math.max(...a.score);
+  $("chartBox").innerHTML = `<div class="card flat">
+    <div class="pillars anim">${cols.map(([k,pl],i)=> pl ? `<div class="pl ${i===2?"me":""}"><p class="h">${i===2?"日主":k}</p>
+      <span class="c">${STEMS[pl[0]]}</span><span class="e" style="background:${EL_FILL[stemEl(pl[0])]}">${EL[stemEl(pl[0])]}</span>
+      <span class="c">${BRANCHES[pl[1]]}</span><span class="e" style="background:${EL_FILL[BR_EL[pl[1]]]}">${EL[BR_EL[pl[1]]]}</span></div>`
+      : `<div class="pl none"><p class="h">${k}</p><span class="c">？</span><span class="e">不詳</span><span class="c">？</span><span class="e">不詳</span></div>`).join("")}</div>
+    <div class="bars anim" aria-label="五行分布">${a.score.map((v,e)=>`<div class="bar"><span>${EL[e]}</span><span class="track"><span class="fill" style="display:block;width:${Math.max(6,v/max*100)}%;background:${EL_FILL[e]}"></span></span><span class="num">${(v/a.total*100).toFixed(0)}%</span></div>`).join("")}</div>
+    <div class="chips anim">
+      <span class="pill yellow">日主 ${STEMS[c.day[0]]}${EL[a.D]}</span>
+      <span class="pill ${a.strong?"coral":"water"}">${a.strong?"身偏強":"身偏弱"}</span>
+      <span class="pill green">喜用 ${a.fav.map(e=>EL[e]).join("、")}</span>
+      <span class="pill soft">大運${a.forward?"順行":"逆行"}</span>
+      ${c.hour?`<span class="pill">真太陽時 ${c.solarStr}（${a.c.adjMin>=0?"+":"−"}${Math.abs(Math.round(a.c.adjMin))} 分）</span>`:""}
+    </div>
+    ${personaBlock(a)}
+  </div>`;
+}
+
+function personaBlock(a){
+  const P = PERSONA[a.c.day[0]];
+  const order = [0,1,2,3,4].sort((x,y)=>a.score[y]-a.score[x]);
+  const most = order[0], least = order[4];
+  return `<div class="sub-card persona anim">
+    <div class="ph">${mascot(a.D, EL_FILL[a.D])}<div><p class="k">個性小說明</p><p class="v">${P.t}</p></div></div>
+    <p class="txt">${P.d}</p>
+    <p class="txt">${P.tip}</p>
+    <p class="txt"><span class="lab">${a.strong?"身偏強":"身偏弱"}</span>${a.strong?"自我能量充足、有主見，適合主動出擊，也記得多聽聽別人的想法。":"心思細膩、懂得合作，和夥伴或貴人一起更能發揮，累了別硬撐。"}</p>
+    <p class="txt"><span class="lab">${EL[most]}最多</span>${EL_MORE[most]}；<span class="lab" style="margin-left:4px">${EL[least]}最少</span>${EL_LESS[least]}。</p>
+  </div>`;
+}
+
+/* 娃娃推薦用的小熊吊飾圖示：只換顏色 */
+/* 首圖用的原創圍巾兔子 */
+function bunnyDoll(){
+  return `<svg class="tag" viewBox="0 0 60 60" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="14" cy="9" r="5" fill="none"/><path d="M17 13l3 5" fill="none"/>
+    <path d="M21 27c-5-8-5-19 0-21 5 1 7 11 5 21z" fill="#F2A497"/><path d="M22.5 22c-1.5-4-1.5-9 0-11" fill="none" stroke="#FFFCF6" stroke-width="2.5"/>
+    <path d="M35 26c2-9 9-15 14-12 2 4-5 11-10 15z" fill="#F2A497"/>
+    <ellipse cx="30" cy="40" rx="18" ry="16" fill="#F2A497"/>
+    <path d="M13 45q17 8 34 0l1 5q-18 9-36 0z" fill="#F6D27A"/><path d="M40 49l3 8 5-3-3-6" fill="#F6D27A"/>
+    <circle cx="23" cy="37" r="2.3" fill="#3E3A39" stroke="none"/><circle cx="37" cy="37" r="2.3" fill="#3E3A39" stroke="none"/>
+    <path d="M28 41q2 2 4 0" fill="none" stroke-width="2"/>
+    <circle cx="18" cy="41" r="3" fill="#FFFCF6" stroke="none"/><circle cx="42" cy="41" r="3" fill="#FFFCF6" stroke="none"/>
+  </g></svg>`;
+}
+
+function bearIcon(fill){
+  const dark = isDark(fill), eye = dark ? "#FFFFFF" : "#3E3A39";
+  return `<svg class="tag" viewBox="0 0 60 60" aria-hidden="true"><g stroke="#3E3A39" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="30" cy="7" r="4.5" fill="none"/><path d="M30 11.5v4" fill="none"/>
+    <circle cx="15" cy="22" r="7" fill="${fill}"/><circle cx="45" cy="22" r="7" fill="${fill}"/>
+    <circle cx="15" cy="22" r="3" fill="#FFFCF6" stroke="none"/><circle cx="45" cy="22" r="3" fill="#FFFCF6" stroke="none"/>
+    <ellipse cx="30" cy="36" rx="20" ry="18" fill="${fill}"/>
+    <ellipse cx="30" cy="42" rx="8" ry="6" fill="#FFFCF6"/>
+    <circle cx="22" cy="34" r="2.3" fill="${eye}" stroke="none"/><circle cx="38" cy="34" r="2.3" fill="${eye}" stroke="none"/>
+    <ellipse cx="30" cy="40" rx="2.5" ry="1.8" fill="#3E3A39" stroke="none"/>
+    <path d="M28 44q2 2 4 0" fill="none" stroke-width="2"/>
+    <circle cx="17" cy="41" r="3.2" fill="#F2A497" stroke="none"/><circle cx="43" cy="41" r="3.2" fill="#F2A497" stroke="none"/>
+  </g></svg>`;
+}
+
+function renderDolls(a, t){
+  const L = a.lucky, S2 = a.second;
+  const pickBrand = BRANDS[mod(jdn(t.y,t.m,t.d),3)];
+  const top = DOLLS[pickBrand.id][L][0];
+  const topC = COLORS[L][top.color];
+  let html = `<div class="card top-pick anim">
+    <span class="badge">${star}今日首選</span>
+    <div class="doll" style="border:0;padding:0">${bearIcon(topC.c)}
+      <div><p class="nm">${pickBrand.name}｜${top.name}</p><p class="why">${top.why}</p>
+      <div class="chips"><span class="pill" style="background:${EL_SOFT[L]}">幸運色｜${topC.n}</span></div></div>
+    </div>
+  </div>`;
+  BRANDS.forEach(b=>{
+    const items = DOLLS[b.id][L].map(d=>({...d, el:L, tag:"幸運色"})).concat([{...DOLLS[b.id][S2][0], el:S2, tag:"輔助色"}]);
+    html += `<div class="card flat brand-card anim">
+      <div class="bh"><h3>${b.name}</h3><span class="pill ${b.pill}">${items.length} 款</span></div>
+      ${items.map(d=>{ const col = COLORS[d.el][d.color]; return `<div class="doll">${bearIcon(col.c)}<div>
+        <p class="nm">${d.name}</p><p class="why">${d.why}</p>
+        <div class="chips"><span class="pill" style="background:${EL_SOFT[d.el]}">${d.tag}｜${col.n}</span></div></div></div>`; }).join("")}
+    </div>`;
+  });
+  html += `<p class="note-small">款式依門市與年份不同，以實際販售為準；小熊圖示只示意顏色，不是商品本身的樣子。</p>`;
+  $("dollBox").innerHTML = html;
+}
+
+function renderGreet(a,p){
+  if(!a){ $("heroGreet").innerHTML = `<a class="btn" href="#profile">輸入生日，看今天的幸運色</a>`; return; }
+  const c = COLORS[a.lucky][0];
+  $("heroGreet").innerHTML = `<a href="#lucky" style="text-decoration:none"><div class="card"><span class="dot" style="background:${c.c}"></span><div><p style="font-size:15px">嗨${p.nick?"，"+esc(p.nick):""}！今天的幸運色</p><p style="font-size:24px">${c.n}・${COLORS[a.lucky][1].n}</p></div></div></a>`;
+}
+
+function renderAll(p, animate){
+  const t = todayInfo(new Date());
+  renderToday(t);
+  renderSaved(p);
+  if(!p){
+    $("luckyBox").innerHTML = emptyBlock("先告訴我你的生日，才能排出今天的幸運色喔。");
+    $("chartBox").innerHTML = emptyBlock("命盤會在填完資料後出現。");
+    $("dollBox").innerHTML = emptyBlock("知道幸運色之後，就幫你挑娃娃。");
+    renderGreet(null); return;
+  }
+  const a = analyse(p, t);
+  renderGreet(a,p); renderLucky(a,t,p); renderChart(a,p); renderDolls(a,t);
+  if(animate && !reduced()){
+    document.querySelectorAll("#lucky .anim, #chart .anim, #dolls .anim").forEach((el,i)=>{
+      el.classList.remove("pop-in"); void el.offsetWidth; el.style.animationDelay = (i*45)+"ms"; el.classList.add("pop-in");
+    });
+    document.querySelectorAll(".zoomable").forEach(el=>el.classList.add("zoom-in"));
+  }
+}
+
+/* ---------- 表單 ---------- */
+$("noTime").addEventListener("change", e=>{ $("btime").disabled = e.target.checked; });
+$("form").addEventListener("submit", e=>{
+  e.preventDefault();
+  const p = {
+    nick: $("nick").value.trim(),
+    gender: $("gM").checked ? "M" : $("gF").checked ? "F" : "",
+    place: $("place").value,
+    date: $("bdate").value,
+    time: $("btime").value,
+    noTime: $("noTime").checked,
+    dst: $("dst").checked
+  };
+  const errs = [];
+  if(!p.gender) errs.push("性別");
+  if(!p.place) errs.push("出生地縣市");
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(p.date) || +p.date.slice(0,4)<1901 || +p.date.slice(0,4)>2099) errs.push("出生日期");
+  if(!p.noTime && !p.time) errs.push("出生時間（或勾選不知道）");
+  const err = $("err");
+  if(errs.length){ err.textContent = "還差一點：" + errs.join("、"); err.classList.add("show"); err.focus?.(); return; }
+  err.classList.remove("show");
+  saveProfile(p);
+  renderAll(p, true);
+  $("lucky").scrollIntoView({behavior: reduced()?"auto":"smooth"});
+});
+
+/* ---------- 減少動態效果 ---------- */
+const MKEY = "lucky-doll-motion";
+const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+function reduced(){
+  const h = document.documentElement;
+  if(h.classList.contains("motion-off")) return true;
+  if(h.classList.contains("motion-on")) return false;
+  return mq.matches;
+}
+function syncMotion(){
+  const r = reduced();
+  document.documentElement.classList.toggle("reduce", r);
+  $("motionBtn").setAttribute("aria-pressed", String(r));
+  $("motionBtn").title = r ? "已減少動態效果，點一下恢復" : "減少動態效果";
+  $("motionWave").setAttribute("d", r ? "M3 12h18" : "M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0");
+}
+(function initMotion(){
+  let pref = null; try{ pref = localStorage.getItem(MKEY); }catch(e){}
+  if(pref==="off") document.documentElement.classList.add("motion-off");
+  if(pref==="on") document.documentElement.classList.add("motion-on");
+  syncMotion();
+  mq.addEventListener?.("change", syncMotion);
+  $("motionBtn").addEventListener("click", ()=>{
+    const h = document.documentElement, nowR = reduced();
+    h.classList.remove("motion-off","motion-on");
+    h.classList.add(nowR ? "motion-on" : "motion-off");
+    try{ localStorage.setItem(MKEY, nowR ? "on" : "off"); }catch(e){}
+    syncMotion();
+  });
+})();
+
+/* ---------- 選單 ---------- */
+(function initNav(){
+  const links = $("navLinks");
+  const upd = ()=> links.classList.toggle("at-end", links.scrollLeft + links.clientWidth >= links.scrollWidth - 4);
+  links.addEventListener("scroll", upd, {passive:true}); window.addEventListener("resize", upd); upd();
+  const map = {}; links.querySelectorAll("a").forEach(a=> map[a.getAttribute("href").slice(1)] = a);
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      const a = map[en.target.id]; if(!a) return;
+      links.querySelectorAll("a").forEach(x=>{ x.classList.remove("active"); x.removeAttribute("aria-current"); });
+      a.classList.add("active"); a.setAttribute("aria-current","true");
+      const left = a.offsetLeft - (links.clientWidth - a.offsetWidth)/2;
+      links.scrollTo({left, behavior: reduced()?"auto":"smooth"});
+    });
+  }, {rootMargin:"-40% 0px -55% 0px"});
+  document.querySelectorAll("main section").forEach(s=>io.observe(s));
+})();
+
+/* ---------- 啟動 ---------- */
+(function heroDolls(){
+  const dolls = [mascot(0,EL_FILL[0]), mascot(1,EL_FILL[1]), bunnyDoll(), mascot(2,EL_FILL[2]), mascot(3,EL_FILL[3]), mascot(4,EL_FILL[4])];
+  const pts = dolls.map((d,i)=>[36+i*57.6, d]);
+  const yAt = x => { const t=(x+5)/370; return (1-t)*(1-t)*78 + 2*(1-t)*t*150 + t*t*78; };
+  $("heroDolls").innerHTML = pts.map(([x,doll],e)=>{
+    const y = yAt(x), len = e%2 ? 20 : 8, size = 64;
+    const svg = doll.replace('class="tag"', `x="${x-15}" y="${y+len-5}" width="${size}" height="${size}"`);
+    return `<g class="sway${e%2?" b":""}"><path d="M${x} ${y}v${len}" fill="none"/>${svg}</g>`;
+  }).join("");
+})();
+renderPlaces();
+const saved = loadProfile();
+fillForm(saved);
+renderAll(saved, false);
+// 跨過午夜自動更新
+let lastKey = todayInfo(new Date()).key;
+setInterval(()=>{ const k = todayInfo(new Date()).key; if(k!==lastKey){ lastKey = k; renderAll(loadProfile(), false); } }, 60000);
+</script>
+</body>
+</html>
